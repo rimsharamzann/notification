@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Toast Form</title>
+<title>Combined Toast Forms</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -11,37 +11,49 @@
     padding: 40px;
   }
 
-  h3 {
+  h2, h3 {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 
-  .form-box {
+  /* ---------- Form Boxes ---------- */
+  .form-box, .container {
     background: #fff;
     padding: 30px;
     border-radius: 16px;
-    width: 340px;
-    margin: 0 auto;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    margin: 30px auto;
+    max-width: 800px;
+  }
+
+  .form-box {
+    width: 340px;
     display: flex;
     flex-direction: column;
   }
 
-  .input-field {
-    padding: 14px 16px;
+  .input-field, input, select {
+    padding: 12px 16px;
     margin: 10px 0;
     border-radius: 10px;
     border: 1.5px solid #ddd;
     font-size: 14px;
     transition: 0.3s;
     background: #fafafa;
+    width: 100%;
+    box-sizing: border-box;
   }
+   input{
+         margin:  0;
 
-  .input-field:focus {
+
+   }
+
+  .input-field:focus, input:focus, select:focus {
     border-color: #6c63ff;
     background: #fff;
-    box-shadow: 0 0 12px rgba(108,99,255,0.2);
     outline: none;
+    box-shadow: 0 0 12px rgba(108,99,255,0.2);
   }
 
   button {
@@ -61,6 +73,39 @@
     background: #574fd6;
   }
 
+  /* ---------- Billing Form Grid ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .full { grid-column: span 2; }
+
+  @media(max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    .full { grid-column: span 1; }
+  }
+
+  .hidden { display: none; }
+
+  /* ---------- Checkbox ---------- */
+  .checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+    font-size: 14px;
+  }
+  .checkbox input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+
+  /* ---------- Toasts ---------- */
   #toast-container {
     position: fixed;
     top: 20px;
@@ -85,11 +130,7 @@
     font-size: 14px;
   }
 
-  .toast.show {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
+  .toast.show { opacity: 1; transform: translateX(0); }
   .toast.success { background: #4CAF50; }
   .toast.error { background: #f44336; }
   .toast.warning { background: #ff9800; }
@@ -103,245 +144,212 @@
   }
 </style>
 </head>
-
 <body>
-   <h2>Hello From JAVA SCRIPT</h2>
 
+<h2>Forms with Toast Notifications</h2>
+
+<!-- ----------------- Login Form ----------------- -->
 <h3>Login Form</h3>
-
 <div class="form-box">
-  <input type="text" id="name" placeholder="Name" class="input-field">
-  <input type="email" id="email" placeholder="Email" class="input-field">
-  <input type="password" id="password" placeholder="Password" class="input-field">
-  <button onclick="validateForm()">Submit</button>
+  <input type="text" id="loginName" placeholder="Name" class="input-field">
+  <input type="email" id="loginEmail" placeholder="Email" class="input-field">
+  <input type="password" id="loginPassword" placeholder="Password" class="input-field">
+  <button onclick="validateLoginForm()">Submit Login</button>
+</div>
+
+<!-- ----------------- Billing Form ----------------- -->
+<div class="container">
+  <label class="checkbox">
+    <input type="checkbox" id="toggleBilling">
+    Billing & Shipping address are the same
+  </label>
+
+  <form id="billingForm" class="hidden">
+    <h2>Billing Information</h2>
+    <div class="grid">
+      <input type="text" placeholder="First Name" id="billingFirst">
+      <input type="text" placeholder="Last Name" id="billingLast">
+
+      <!-- <select class="full" id="billingCountry">
+        <option>United States</option>
+        <option>Canada</option>
+      </select> -->
+
+      <input class="full" type="text" placeholder="Address" id="billingAddress">
+      <input class="full" type="text" placeholder="Apt, Suite, etc. (optional)" id="billingApt">
+      
+      <input type="text" placeholder="City" id="billingCity">
+     
+      
+      <select id="billingState">
+        <option value="">Select State</option>
+        <option value="District of Columbia">District of Columbia</option>
+        <option value="California">California</option>
+        <option value="New York">New York</option>
+        <option value="Texas">Texas</option>
+        <option value="Florida">Florida</option>
+        <!-- Add all other states here -->
+      </select>
+
+      <input type="text" placeholder="ZIP Code" id="billingZip">
+    </div>  
+    <button type="submit">Submit Billing</button>
+     <button type="button" id="getLocation">Use Current Location</button>
+
+  </form>   
 </div>
 
 <!-- Toast container -->
 <div id="toast-container"></div>
 
 <script>
-  // Validate form fields
-  function validateForm() {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+/* ---------- Toast Functions ---------- */  
+function showToast(message, type = "success") {
+  const container = document.getElementById("toast-container");
 
-    let hasError = false;
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${message}</span><button>&times;</button>`;
+  container.appendChild(toast);
 
-    if (!name) {
-      showToast("Name required!", "warning");
-      hasError = true;
-    }
+  setTimeout(() => toast.classList.add("show"), 10);
 
-    if (!email.includes("@") || !email) {
-      showToast("Email must contain @", "error");
-      hasError = true;
-    }
+  const autoHide = setTimeout(() => removeToast(toast), 4000);
 
-    if (!password) {
-      showToast("Password required!", "warning");
-      hasError = true;
-    }
+  toast.querySelector("button").onclick = () => {
+    clearTimeout(autoHide);
+    removeToast(toast);
+  };  
+}
 
-    if (!hasError) {
-      showToast("Form submitted successfully!", "success");
-      document.getElementById("name").value = '';
-      document.getElementById("email").value = '';
-      document.getElementById("password").value = '';
-    }
+function removeToast(toast) {
+  toast.classList.remove("show");
+  setTimeout(() => toast.remove(), 400);
+}  
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(async position => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+        const data = await res.json();
+
+        if (data.address && data.address.state) {
+          const userState = data.address.state;
+          const dropdown = document.getElementById("billingState");
+
+          // Check if user's state exists in dropdown
+          const optionExists = Array.from(dropdown.options).some(opt => opt.value.toLowerCase() === userState.toLowerCase());
+
+          if(optionExists){
+            // Insert a temporary "default" option at the top
+            const defaultOption = document.createElement("option");
+            defaultOption.text = userState;
+            defaultOption.value = userState;
+            defaultOption.selected = true; // show it by default
+            defaultOption.hidden = true;   // hides it from dropdown list
+            dropdown.prepend(defaultOption);
+          }
+
+        }
+      } catch(err){
+        console.log("Could not fetch state from location", err);
+      }
+
+    });
   }
-
-  function showToast(message, type = "success") {
-    const container = document.getElementById("toast-container");
-
-    const toast = document.createElement("div");
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-      <span>${message}</span>
-      <button>&times;</button>
-    `;
-
-    container.appendChild(toast);
-
-    setTimeout(() => toast.classList.add("show"), 10);
-
-    const autoHide = setTimeout(() => removeToast(toast), 4000);
-
-    toast.querySelector("button").onclick = () => {
-      clearTimeout(autoHide);
-      removeToast(toast);
-    };
-  }
-
-  function removeToast(toast) {
-    toast.classList.remove("show");
-    setTimeout(() => toast.remove(), 400);
-  }
-
-
-
-
-</script>
-
-</body>
-</html>
-<!-- Map => arry ko use kr k naya array create krwana ho .... or  -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Billing Shipping Form</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f3f3f3;
-  padding: 30px;
-}
-
-.container {
-  background: #fff;
-  padding: 30px;
-  max-width: 800px;
-  margin: auto;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-h2 {
-  margin: 20px 0 10px;
-  font-weight: 700;
-}
-
-.checkbox {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  gap: 10px;
-  font-size: 14px;
-}
- .checkbox input[type="checkbox"] {
-  width: auto;
-  height: auto;
-  padding: 0;
-  margin: 0;
-  transform: scale(1.2); /* optional */
-  cursor: pointer;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.full {
-  grid-column: span 2;
-}
-
-input, select {
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1.5px solid #ddd;
-  background: #fafafa;
-  font-size: 14px;
-  width: 100%;
-  transition: .3s;
-  box-sizing: border-box;
-}
-
-input:focus, select:focus {
-  border-color: #f6c56a;
-  background: #fff;
-  outline: none;
-  box-shadow: 0 0 8px rgba(0,0,0,.08);
-}
-
-button {
-  width: 100%;
-  height: 48px;
-  border: none;
-  background: #4f46e5;
-  color: white;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: .3s;
-}
-
-button:hover {
-  background: #4338ca;
-}
-
-.hidden {
-  display: none;
-}
-
-@media(max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  .full {
-    grid-column: span 1;
-  }
-}
-</style>
-</head>
-<body>
-
-<div class="container">
-
-  <label class="checkbox">
-    <input type="checkbox" id="toggleBilling">
-    Billing & Shipping address are the same
-  </label>
-
-  <form id="form">
-
-    <div id="billingForm" class="hidden">
-
-      <h2>Billing Information</h2>
-
-      <div class="grid">
-        <input type="text" placeholder="First Name">
-        <input type="text" placeholder="Last Name">
-
-        <select class="full">
-          <option>United States</option>
-          <option>Canada</option>
-        </select>
-
-        <input class="full" type="text" placeholder="Address">
-        <input class="full" type="text" placeholder="Apt, Suite, etc. (optional)">
-
-        <input type="text" placeholder="City">
-        <select>
-          <option>District of Columbia</option>
-          <option>California</option>
-        </select>
-
-        <input type="text" placeholder="ZIP Code">
-      </div>
-
-      <button type="submit">Submit</button>
-    </div>
-
-  </form>
-</div>
-
-<script>
-const checkbox = document.getElementById("toggleBilling");
-const form = document.getElementById("billingForm");
-
-checkbox.addEventListener("change", () => {
-  form.classList.toggle("hidden", !checkbox.checked);
 });
 
-document.getElementById("form").addEventListener("submit", e => {
+
+
+/* ---------- Login Form Validation ---------- */
+function validateLoginForm() {
+  const name = document.getElementById("loginName").value.trim();
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+
+  let hasError = false;
+
+  if (!name) { showToast("Name required!", "warning"); hasError = true; }
+  if (!email.includes("@") || !email) { showToast("Email must contain @", "error"); hasError = true; }
+  if (!password) { showToast("Password required!", "warning"); hasError = true; }
+
+  if (!hasError) {
+    showToast("Login submitted successfully!", "success");
+    document.getElementById("loginName").value = '';
+    document.getElementById("loginEmail").value = '';
+    document.getElementById("loginPassword").value = '';
+  }
+}
+
+ document.getElementById("getLocation").addEventListener("click", () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  } else {
+    showToast("Geolocation is not supported by your browser", "error");
+  }
+});
+
+function success(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+
+  showToast(`Location detected: ${lat.toFixed(2)}, ${lon.toFixed(2)}`, "success");
+
+  // Example using OpenStreetMap Nominatim for reverse geocoding
+  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+    .then(res => res.json())
+    .then(data => {
+      // Auto-fill form fields
+      if(data.address){
+        if(data.address.city) document.getElementById("billingCity").value = data.address.city;
+        if(data.address.state) document.getElementById("billingState").value = data.address.state;
+        if(data.address.country) document.getElementById("billingCountry").value = data.address.country;
+        if(data.address.road) document.getElementById("billingAddress").value = data.address.road;
+      }
+    })
+    .catch(() => showToast("Could not get address from location", "error"));
+}
+
+function error() {
+  showToast("Unable to retrieve your location", "error");
+}
+
+
+/* ---------- Billing Form Toggle & Validation ---------- */
+const toggleCheckbox = document.getElementById("toggleBilling");
+const billingForm = document.getElementById("billingForm");
+
+toggleCheckbox.addEventListener("change", () => {
+  billingForm.classList.toggle("hidden", !toggleCheckbox.checked);
+});
+
+billingForm.addEventListener("submit", e => {
   e.preventDefault();
-  alert("Form submitted");
+
+  const first = document.getElementById("billingFirst").value.trim();
+  const last = document.getElementById("billingLast").value.trim();
+  const address = document.getElementById("billingAddress").value.trim();
+  const city = document.getElementById("billingCity").value.trim();
+  const zip = document.getElementById("billingZip").value.trim();
+
+  if (!first || !last || !address || !city || !zip) {
+    showToast("Please fill all required billing fields!", "warning");
+    return;
+  }
+
+  showToast("Billing info submitted successfully!", "success");
+
+  // Clear fields
+  ["billingFirst","billingLast","billingAddress","billingApt","billingCity","billingZip"].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  toggleCheckbox.checked = false;
+  billingForm.classList.add("hidden");
 });
 </script>
 
