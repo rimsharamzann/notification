@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toast Form</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#eef2f7,#dbe6f6);
+    padding: 40px;
+  }
+
+  h3 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .form-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px;
+    width: 340px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-field {
+    padding: 14px 16px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1.5px solid #ddd;
+    font-size: 14px;
+    transition: 0.3s;
+    background: #fafafa;
+  }
+
+  .input-field:focus {
+    border-color: #6c63ff;
+    background: #fff;
+    box-shadow: 0 0 12px rgba(108,99,255,0.2);
+    outline: none;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #6c63ff;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #574fd6;
+  }
+
+  #toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .toast {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 250px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #fff;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: 0.4s ease;
+    font-size: 14px;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .toast.success { background: #4CAF50; }
+  .toast.error { background: #f44336; }
+  .toast.warning { background: #ff9800; }
+
+  .toast button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+   <h2>Hello From JAVA SCRIPT</h2>
+
+<h3>Login Form</h3>
+
+<div class="form-box">
+  <input type="text" id="name" placeholder="Name" class="input-field">
+  <input type="email" id="email" placeholder="Email" class="input-field">
+  <input type="password" id="password" placeholder="Password" class="input-field">
+  <button onclick="validateForm()">Submit</button>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<script>
+  // Validate form fields
+  function validateForm() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    let hasError = false;
+
+    if (!name) {
+      showToast("Name required!", "warning");
+      hasError = true;
+    }
+
+    if (!email.includes("@") || !email) {
+      showToast("Email must contain @", "error");
+      hasError = true;
+    }
+
+    if (!password) {
+      showToast("Password required!", "warning");
+      hasError = true;
+    }
+
+    if (!hasError) {
+      showToast("Form submitted successfully!", "success");
+      document.getElementById("name").value = '';
+      document.getElementById("email").value = '';
+      document.getElementById("password").value = '';
+    }
+  }
+
+  function showToast(message, type = "success") {
+    const container = document.getElementById("toast-container");
+
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+      <span>${message}</span>
+      <button>&times;</button>
+    `;
+
+    container.appendChild(toast);
+
+    setTimeout(() => toast.classList.add("show"), 10);
+
+    const autoHide = setTimeout(() => removeToast(toast), 4000);
+
+    toast.querySelector("button").onclick = () => {
+      clearTimeout(autoHide);
+      removeToast(toast);
+    };
+  }
+
+  function removeToast(toast) {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 400);
+  }
+
+
+
+
+</script>
+
+</body>
+</html>
+<!-- Map => arry ko use kr k naya array create krwana ho .... or  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Billing Shipping Form</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f3f3;
+  padding: 30px;
+}
+
+.container {
+  background: #fff;
+  padding: 30px;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  margin: 20px 0 10px;
+  font-weight: 700;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+  font-size: 14px;
+}
+ .checkbox input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  transform: scale(1.2); /* optional */
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.full {
+  grid-column: span 2;
+}
+
+input, select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #ddd;
+  background: #fafafa;
+  font-size: 14px;
+  width: 100%;
+  transition: .3s;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  border-color: #f6c56a;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0,0,0,.08);
+}
+
+button {
+  width: 100%;
+  height: 48px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+button:hover {
+  background: #4338ca;
+}
+
+.hidden {
+  display: none;
+}
+
+@media(max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .full {
+    grid-column: span 1;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <label class="checkbox">
+    <input type="checkbox" id="toggleBilling">
+    Billing & Shipping address are the same
+  </label>
+
+  <form id="form">
+
+    <div id="billingForm" class="hidden">
+
+      <h2>Billing Information</h2>
+
+      <div class="grid">
+        <input type="text" placeholder="First Name">
+        <input type="text" placeholder="Last Name">
+
+        <select class="full">
+          <option>United States</option>
+          <option>Canada</option>
+        </select>
+
+        <input class="full" type="text" placeholder="Address">
+        <input class="full" type="text" placeholder="Apt, Suite, etc. (optional)">
+
+        <input type="text" placeholder="City">
+        <select>
+          <option>District of Columbia</option>
+          <option>California</option>
+        </select>
+
+        <input type="text" placeholder="ZIP Code">
+      </div>
+
+      <button type="submit">Submit</button>
+    </div>
+
+  </form>
+</div>
+
+<script>
+const checkbox = document.getElementById("toggleBilling");
+const form = document.getElementById("billingForm");
+
+checkbox.addEventListener("change", () => {
+  form.classList.toggle("hidden", !checkbox.checked);
+});
+
+document.getElementById("form").addEventListener("submit", e => {
+  e.preventDefault();
+  alert("Form submitted");
+});
+</script>
+
+</body>
+</html>
