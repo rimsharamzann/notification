@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- Header / Logo + Secure Connection -->
+<header class="bg-white shadow p-6 flex items-center justify-center space-x-6">
+  <img src="https://assets.checkoutchamp.com/9ca087bc-bb0c-4d40-bc18-588b1456617c/1746778672251_logo_updates.png" alt="Logo" class="h-10 w-auto">
+  <div class="flex items-center text-green-600 font-semibold text-sm">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-7V7a1 1 0 112 0v4a1 1 0 11-2 0zm1 4a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+    </svg>
+    SECURE CONNECTION
+  </div>
+</header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="lg:grid lg:grid-cols-12 lg:gap-x-12">
+      
+      <!-- Left Column: Contact + Shipping + Payment -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- STEP 1: Contact Info -->
+        <section>
+          <div class="flex items-center mb-4">
+            <h2 class="text-lg font-bold mr-3">STEP 1:</h2>
+            <p class="font-bold">CONTACT INFORMATION</p>
+          </div>
+          <form class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input type="text" placeholder="First Name" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400">
+            <input type="text" placeholder="Last Name" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400">
+            <input type="email" placeholder="Email" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400 sm:col-span-2">
+            <input type="tel" placeholder="Phone Number" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400 sm:col-span-2">
+          </form>
+        </section>
+
+        <!-- STEP 2: Shipping -->
+        <section>
+          <div class="flex items-center mb-4">
+            <h2 class="text-lg font-bold mr-3">STEP 2:</h2>
+            <p class="font-bold">SHIPPING INFORMATION</p>
+          </div>
+          <form class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input type="text" placeholder="Address Line 1" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400 sm:col-span-2">
+            <input type="text" placeholder="Address Line 2" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400 sm:col-span-2">
+            <input type="text" placeholder="City" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400">
+            <input type="text" placeholder="State" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400">
+            <input type="text" placeholder="ZIP / Postal Code" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400">
+            <input type="text" placeholder="Country" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400">
+          </form>
+        </section>
+
+        <!-- STEP 3: Payment -->
+        <section>
+          <div class="flex items-center mb-4">
+            <h2 class="text-lg font-bold mr-3">STEP 3:</h2>
+            <p class="font-bold">PAYMENT</p>
+          </div>
+          <form class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input type="text" placeholder="Cardholder Name" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400 sm:col-span-2">
+            <input type="text" placeholder="Card Number" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400 sm:col-span-2">
+            <input type="text" placeholder="Expiry Date (MM/YY)" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400">
+            <input type="text" placeholder="CVC" class="block w-full h-12 rounded-md border-gray-300 shadow-sm px-3 placeholder:text-gray-400">
+          </form>
+        </section>
+
+        <!-- LIMITED STOCK TIMER -->
+        <div class="bg-red-50 border border-red-400 text-red-600 font-bold px-4 py-2 rounded-md w-fit mt-4">
+          LIMITED STOCK! <span id="stock-timer">05:00</span> remaining
+        </div>
+
+      </div>
+
+      <!-- Right Column: Cart Summary -->
+
+
+       <aside class="lg:col-span-5 bg-white p-6 rounded-xl shadow-md space-y-5 mt-6 lg:mt-0">
+  <h3 class="text-xl font-semibold border-b pb-3 mb-4">Order Summary</h3>
+
+  <!-- Cart Items -->
+  <div class="space-y-4">
+    <!-- Item 1 -->
+     <div class="cart-item flex items-start justify-between p-3 border-b" data-price="74.85">
+  <!-- Image + Badge -->
+  <div class="flex items-start space-x-3">
+    <div class="relative">
+      <img src="https://assets.checkoutchamp.com/834c070e-a9d0-4e6d-b62d-b30d8a9c0179/1766431431826_1_6_.webp" 
+           alt="ParaVanish" class="w-16 h-16 rounded-md object-cover">
+      <!-- Quantity Badge -->
+      <div class="absolute -top-2 -left-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full qty-badge">1</div>
+    </div>
+    <!-- Product Info + Qty buttons -->
+    <div>
+      <div class="font-medium">ParaVanish</div>
+      <div class="text-gray-400 text-sm mb-2">3 bottles. Ships every 3 months.</div>
+      <!-- Minus / Plus -->
+      <div class="flex items-center space-x-2">
+        <button class="qty-minus px-2 py-1 bg-gray-200 rounded">-</button>
+        <div class="qty w-6 text-center">1</div>
+        <button class="qty-plus px-2 py-1 bg-gray-200 rounded">+</button>
+      </div>
+    </div>
+  </div>
+  <!-- Price -->
+  <div class="text-right">
+    <div class="text-gray-400 line-through text-sm">$134.99</div>
+    <div class="text-green-600 font-semibold item-total">$74.85</div>
+  </div>
+</div>
+    <!-- <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="relative">
+          <img src="https://assets.checkoutchamp.com/834c070e-a9d0-4e6d-b62d-b30d8a9c0179/1766431431826_1_6_.webp" alt="ParaVanish" class="w-16 h-16 rounded-md object-cover">
+          <div class="absolute -top-2 -left-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">1</div>
+        </div>
+        <div>
+          <div class="font-medium">ParaVanish</div>
+          <div class="text-gray-400 text-sm">3 bottles. Ships every 3 months.</div>
+        </div>
+      </div>
+      <div class="text-right">
+        <div class="text-gray-400 line-through text-sm">$134.99</div>
+        <div class="text-green-600 font-semibold">$74.85</div>
+      </div>
+    </div> -->
+
+    <!-- Free Shipping Row -->
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gray-300 rounded-md flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v13H3V3zm0 13v5h18v-5H3z" />
+          </svg>
+        </div>
+        <div>
+          <div class="font-medium">Free Shipping</div>
+          <div class="text-gray-400 text-sm">Limited Time Offer</div>
+        </div>
+      </div>
+      <div class="text-green-600 font-semibold">FREE</div>
+    </div>
+
+    <!-- Coupon Input -->
+    <div class="flex space-x-2">
+      <input type="text" placeholder="Coupon Code" class="flex-1 border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <button class="bg-black text-white px-4 py-2 rounded-md font-semibold hover:bg-gray-900">Apply</button>
+    </div>
+  </div>
+
+  <!-- Totals -->
+
+  <div class="order-summary-totals space-y-2 pt-4 border-t">
+  <div class="flex justify-between text-gray-600"><span>Sub Total</span><span class="subtotal-value">$0.00</span></div>
+  <div class="flex justify-between text-gray-600"><span>Shipping</span><span class="text-green-600 font-semibold">FREE</span></div>
+  <div class="flex justify-between text-gray-600"><span>Sales Tax</span><span class="tax-value">$0.00</span></div>
+  <div class="flex justify-between text-gray-600"><span>Discount</span><span class="discount-value">$0.00</span></div>
+  <hr>
+  <div class="flex justify-between font-bold text-lg"><span>Total (All Prices in USD)</span><span class="total-value">$0.00</span></div>
+</div>
+ 
+
+  <button class="w-full bg-black hover:bg-gray-900 text-white py-3 rounded-md font-bold mt-4">
+    Proceed to Payment
+  </button>
+</aside>
+
+
+      
+    
+    </div>
+  </main>
+
+   <script>
+   // -----------------------------
+// Quantity increment/decrement & badge update
+// -----------------------------
+document.querySelectorAll('.cart-item').forEach(item => {
+  const qtyEl = item.querySelector('.qty');
+  const badgeEl = item.querySelector('.qty-badge');
+  const price = parseFloat(item.dataset.price);
+  const totalEl = item.querySelector('.item-total');
+
+  const updateItemTotal = () => {
+    const qty = parseInt(qtyEl.textContent);
+    totalEl.textContent = `$${(price * qty).toFixed(2)}`;
+    badgeEl.textContent = qty;
+    updateCartTotal();
+  };
+
+  const plusBtn = item.querySelector('.qty-plus');
+  const minusBtn = item.querySelector('.qty-minus');
+
+  plusBtn.addEventListener('click', updateItemTotalWrapper);
+  minusBtn.addEventListener('click', updateItemTotalWrapper);
+
+  function updateItemTotalWrapper(e) {
+    let qty = parseInt(qtyEl.textContent);
+    if (e.target === plusBtn) qty++;
+    if (e.target === minusBtn && qty > 1) qty--;
+    qtyEl.textContent = qty;
+    updateItemTotal();
+  }
+});
+
+// -----------------------------
+// Cart totals
+// -----------------------------
+const taxRate = 0.07;
+let currentDiscount = 0;
+
+function updateCartTotal() {
+  let subtotal = 0;
+  document.querySelectorAll('.cart-item').forEach(item => {
+    const price = parseFloat(item.dataset.price);
+    const qty = parseInt(item.querySelector('.qty').textContent);
+    subtotal += price * qty;
+  });
+
+  const tax = subtotal * taxRate;
+  const total = subtotal - currentDiscount + tax;
+
+  let summary = document.querySelector('.order-summary-totals');
+  if (!summary) {
+    summary = document.createElement('div');
+    summary.classList.add('order-summary-totals', 'space-y-2', 'pt-4', 'border-t');
+    summary.innerHTML = `
+      <div class="flex justify-between text-gray-600"><span>Sub Total</span><span class="subtotal-value">$${subtotal.toFixed(2)}</span></div>
+      <div class="flex justify-between text-gray-600"><span>Shipping</span><span class="text-green-600 font-semibold">FREE</span></div>
+      <div class="flex justify-between text-gray-600"><span>Sales Tax</span><span class="tax-value">$${tax.toFixed(2)}</span></div>
+      <div class="flex justify-between text-gray-600"><span>Discount</span><span class="discount-value">$${currentDiscount.toFixed(2)}</span></div>
+      <hr>
+      <div class="flex justify-between font-bold text-lg"><span>Total</span><span class="total-value">$${total.toFixed(2)}</span></div>
+    `;
+    document.querySelector('aside').appendChild(summary);
+  } else {
+    summary.querySelector('.subtotal-value').textContent = `$${subtotal.toFixed(2)}`;
+    summary.querySelector('.tax-value').textContent = `$${tax.toFixed(2)}`;
+    summary.querySelector('.discount-value').textContent = `$${currentDiscount.toFixed(2)}`;
+    summary.querySelector('.total-value').textContent = `$${total.toFixed(2)}`;
+  }
+}
+
+updateCartTotal();
+
+// -----------------------------
+// Coupon apply
+// -----------------------------
+const couponInput = document.querySelector('aside input[placeholder="Coupon Code"]');
+const applyBtn = document.querySelector('aside .bg-black'); // make it specific to Apply button
+
+applyBtn.addEventListener('click', () => {
+  const code = couponInput.value.trim().toUpperCase();
+  const subtotal = Array.from(document.querySelectorAll('.cart-item')).reduce((acc, item) => {
+    return acc + parseFloat(item.dataset.price) * parseInt(item.querySelector('.qty').textContent);
+  }, 0);
+
+  if(code === "FLAT10") currentDiscount = 10;
+  else if(code === "SAVE20") currentDiscount = subtotal * 0.2;
+  else {
+    currentDiscount = 0;
+    alert("Invalid coupon code");
+  }
+
+  updateCartTotal();
+});</script>
+<!-- 
+  <script>
+
+// -----------------------------
+// 1. Hide specific cart products
+// -----------------------------
+// function hideTrackingProduct() {
+//   document.querySelectorAll('.cc-cart-row').forEach(row => {
+//     const title = row.querySelector('.cc-cart-row-prod-title');
+//     if (title && title.textContent.trim() === "Fynnaco Rewards Club") {
+//       row.style.display = 'none';
+//     }
+//   });
+// }
+
+// Observe cart container for dynamic changes
+// const cartContainer = document.querySelector('.cc-cart-container');
+// if (cartContainer) {
+//   const observer = new MutationObserver(() => hideTrackingProduct());
+//   observer.observe(cartContainer, { childList: true, subtree: true });
+// }
+// hideTrackingProduct();
+
+// -----------------------------
+// 2. Timer countdown (5 mins)
+// -----------------------------
+// const timerElement = document.querySelector('.ournew-timer');
+// let timeLeft = 5 * 60; // 5 minutes
+
+// function updateTimer() {
+//   const minutes = Math.floor(timeLeft / 60);
+//   const seconds = timeLeft % 60;
+//   timerElement.textContent = `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+//   if(timeLeft > 0) timeLeft--; 
+//   else clearInterval(timerInterval);
+// }
+// const timerInterval = setInterval(updateTimer, 1000);
+// updateTimer();
+// Update quantity and badge
+// document.querySelectorAll('.cart-item').forEach(item => {
+//   const qtyEl = item.querySelector('.qty');
+//   const badgeEl = item.querySelector('.qty-badge');
+//   const price = parseFloat(item.dataset.price);
+//   const totalEl = item.querySelector('.item-total');
+
+//   item.querySelector('.qty-plus').addEventListener('click', () => {
+//     let qty = parseInt(qtyEl.textContent);
+//     qty++;
+//     qtyEl.textContent = qty;
+//     badgeEl.textContent = qty;
+//     totalEl.textContent = `$${(price * qty).toFixed(2)}`;
+//     updateCartTotal();
+//   });
+
+//   item.querySelector('.qty-minus').addEventListener('click', () => {
+//     let qty = parseInt(qtyEl.textContent);
+//     if (qty > 1) qty--;
+//     qtyEl.textContent = qty;
+//     badgeEl.textContent = qty;
+//     totalEl.textContent = `$${(price * qty).toFixed(2)}`;
+//     updateCartTotal();
+//   });
+// });
+
+// Update Cart Subtotal, Tax, and Total dynamically
+// function updateCartTotal() {
+//   let subtotal = 0;
+//   document.querySelectorAll('.cart-item').forEach(item => {
+//     const price = parseFloat(item.dataset.price);
+//     const qty = parseInt(item.querySelector('.qty').textContent);
+//     subtotal += price * qty;
+//   });
+
+//   const taxRate = 0.07; // 7% example
+//   const tax = subtotal * taxRate;
+
+//   let discount = 0; // if coupon applied, calculate here
+
+//   const total = subtotal - discount + tax;
+
+//   document.querySelector('.subtotal-value').textContent = `$${subtotal.toFixed(2)}`;
+//   document.querySelector('.tax-value').textContent = `$${tax.toFixed(2)}`;
+//   document.querySelector('.total-value').textContent = `$${total.toFixed(2)}`;
+// }
+
+// // Initial total calculation
+// updateCartTotal();
+
+// -----------------------------
+// 3. Country code dropdown
+// -----------------------------
+const countryCodes = ["+1","+93","+355","+213","+376","+244","+54","+374","+61","+43","+994","+973","+880","+375","+32","+501"];
+const phoneSelect = document.getElementById('phone_code');
+countryCodes.forEach(code => {
+  const option = document.createElement('option');
+  option.value = code;
+  option.textContent = code;
+  phoneSelect.appendChild(option);
+});
+
+// -----------------------------
+// 4. Continue button click
+// -----------------------------
+// document.getElementById('continue-button').addEventListener('click', function(e) {
+//   e.preventDefault();
+  
+//   // Basic validation example
+//   const email = document.querySelector('input[name="emailAddress"]').value.trim();
+//   if(!email) {
+//     alert('Please enter your email!');
+//     return;
+//   }
+
+//   // Show toast instead of submitting
+//   const toast = document.createElement('div');
+//   toast.textContent = "Review Order clicked!";
+//   toast.style.position = 'fixed';
+//   toast.style.top = '20px';
+//   toast.style.right = '20px';
+//   toast.style.background = '#4caf50';
+//   toast.style.color = '#fff';
+//   toast.style.padding = '12px 20px';
+//   toast.style.borderRadius = '6px';
+//   toast.style.zIndex = 9999;
+//   document.body.appendChild(toast);
+//   setTimeout(() => toast.remove(), 3000);
+// });
+
+// // -----------------------------
+// // 5. Quantity increment/decrement
+// // -----------------------------
+// document.querySelectorAll('.cc-cart-row .cc-cart-row-qty-btn').forEach(btn => {
+//   btn.addEventListener('click', function() {
+//     const qtyEl = this.closest('.inner_d').querySelector('.cc-cart-row-prod-qty');
+//     let qty = parseInt(qtyEl.textContent);
+//     if(this.classList.contains('fa-plus')) qty++;
+//     else if(this.classList.contains('fa-minus') && qty > 1) qty--;
+//     qtyEl.textContent = qty;
+//   });
+// });
+
+// -----------------------------
+// 6. Auto-resize iframe
+// -----------------------------
+function resizeIframe(iframe) {
+  try {
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    iframe.style.height = doc.body.scrollHeight + 'px';
+    iframe.style.width = doc.body.scrollWidth + 'px';
+  } catch(e) {
+    console.log('Cannot access iframe content (cross-origin)');
+  }
+}
+
+// -----------------------------
+// 7. Optional: hide toggle/cart elements
+// -----------------------------
+setTimeout(() => {
+  document.querySelectorAll('.cc-cart-toggle').forEach(el => el.style.display='none');
+  document.querySelectorAll('.cc-cart-hidden-text').forEach(el => el.style.display='none');
+  document.querySelectorAll('.cc-cart-open-text').forEach(el => el.style.display='block');
+}, 2000);
+
+
+ // -----------------------------
+// 1. Quantity increment/decrement & badge update
+// -----------------------------
+document.querySelectorAll('.cart-item').forEach(item => {
+  const qtyEl = item.querySelector('.qty');
+  const badgeEl = item.querySelector('.qty-badge');
+  const price = parseFloat(item.dataset.price);
+  const totalEl = item.querySelector('.item-total');
+
+  const updateItemTotal = () => {
+    const qty = parseInt(qtyEl.textContent);
+    totalEl.textContent = `$${(price * qty).toFixed(2)}`;
+    badgeEl.textContent = qty;
+    updateCartTotal(); // update cart totals
+  };
+
+  item.querySelector('.qty-plus').addEventListener('click', () => {
+    let qty = parseInt(qtyEl.textContent);
+    qty++;
+    qtyEl.textContent = qty;
+    updateItemTotal();
+  });
+
+  item.querySelector('.qty-minus').addEventListener('click', () => {
+    let qty = parseInt(qtyEl.textContent);
+    if(qty > 1) qty--;
+    qtyEl.textContent = qty;
+    updateItemTotal();
+  });
+});
+
+// -----------------------------
+// 2. Cart totals: subtotal, tax, discount, total
+// -----------------------------
+const taxRate = 0.07; // 7% tax
+let currentDiscount = 0; // default no discount
+
+function updateCartTotal() {
+  let subtotal = 0;
+
+  document.querySelectorAll('.cart-item').forEach(item => {
+    const price = parseFloat(item.dataset.price);
+    const qty = parseInt(item.querySelector('.qty').textContent);
+    subtotal += price * qty;
+  });
+
+  const tax = subtotal * taxRate;
+  const total = subtotal - currentDiscount + tax;
+
+  // Update totals in DOM
+  let summary = document.querySelector('.order-summary-totals');
+  if(!summary) {
+    summary = document.createElement('div');
+    summary.classList.add('order-summary-totals', 'space-y-2', 'pt-4', 'border-t');
+    summary.innerHTML = `
+      <div class="flex justify-between text-gray-600"><span>Sub Total</span><span class="subtotal-value">$${subtotal.toFixed(2)}</span></div>
+      <div class="flex justify-between text-gray-600"><span>Shipping</span><span class="text-green-600 font-semibold">FREE</span></div>
+      <div class="flex justify-between text-gray-600"><span>Sales Tax</span><span class="tax-value">$${tax.toFixed(2)}</span></div>
+      <div class="flex justify-between text-gray-600"><span>Discount</span><span class="discount-value">$${currentDiscount.toFixed(2)}</span></div>
+      <hr>
+      <div class="flex justify-between font-bold text-lg"><span>Total</span><span class="total-value">$${total.toFixed(2)}</span></div>
+    `;
+    document.querySelector('aside').appendChild(summary);
+  } else {
+    summary.querySelector('.subtotal-value').textContent = `$${subtotal.toFixed(2)}`;
+    summary.querySelector('.tax-value').textContent = `$${tax.toFixed(2)}`;
+    summary.querySelector('.discount-value').textContent = `$${currentDiscount.toFixed(2)}`;
+    summary.querySelector('.total-value').textContent = `$${total.toFixed(2)}`;
+  }
+}
+
+// Initial calculation
+updateCartTotal();
+
+// -----------------------------
+// 3. Coupon apply
+// -----------------------------
+const couponInput = document.querySelector('aside input[placeholder="Coupon Code"]');
+const applyBtn = document.querySelector('aside button');
+
+applyBtn.addEventListener('click', () => {
+  const code = couponInput.value.trim().toUpperCase();
+
+  const subtotal = Array.from(document.querySelectorAll('.cart-item')).reduce((acc, item) => {
+    return acc + parseFloat(item.dataset.price) * parseInt(item.querySelector('.qty').textContent);
+  }, 0);
+
+  if(code === "FLAT10") currentDiscount = 10;
+  else if(code === "SAVE20") currentDiscount = subtotal * 0.2;
+  else {
+    currentDiscount = 0;
+    alert("Invalid coupon code");
+  }
+
+  updateCartTotal();
+});
+
+// -----------------------------
+// 4. Optional: timer countdown (example)
+// -----------------------------
+const timerElement = document.getElementById('stock-timer');
+let timeLeft = 5 * 60; // 5 mins
+function updateTimer() {
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  if(timerElement) timerElement.textContent = `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+  if(timeLeft > 0) timeLeft--;
+  else clearInterval(timerInterval);
+}
+const timerInterval = setInterval(updateTimer, 1000);
+updateTimer();
+
+</script> -->
+
+
+</body>
+</html>

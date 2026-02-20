@@ -175,6 +175,10 @@ function showToast(message, type = "success") {
     removeToast(toast);
   };
 }
+ let para =document.createElement("p");
+ para =document.innerHTML("This is new para");
+ para.style.color="red";
+ para.style.background="purple";
 
 function removeToast(toast) {
   toast.classList.remove("show");
